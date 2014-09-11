@@ -16,8 +16,6 @@ public class Core {
     public void init(String server){
         randoms.add(new Jail());
         randoms.add(new TriangleSandwich());
-        randoms.add(new TestOne());
-        randoms.add(new TestTwo());
 
         for (Random random : randoms){
             if (random.getServer().toLowerCase().equalsIgnoreCase(server.toLowerCase())){

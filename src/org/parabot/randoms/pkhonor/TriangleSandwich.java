@@ -32,7 +32,7 @@ public class TriangleSandwich implements Random {
 
         @Override
         public String getName() {
-            return "Triangle Sandwich Handeler";
+            return "Triangle Sandwich handler";
         }
 
         @Override

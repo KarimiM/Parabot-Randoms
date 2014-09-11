@@ -11,9 +11,13 @@ import java.util.ArrayList;
 public class Core {
     private ArrayList<Random> randoms = new ArrayList<Random>();
 
-    public void init(){
+    public void init(String server){
         randoms.add(new TestOne());
         randoms.add(new TestTwo());
-        Context.getInstance().getRandomHandler().setRandoms(this.randoms);
+        for (Random random : randoms){
+            if (random.getServer().toLowerCase().equalsIgnoreCase(server.toLowerCase())){
+                Context.getInstance().getRandomHandler().addRandom(random);
+            }
+        }
     }
 }

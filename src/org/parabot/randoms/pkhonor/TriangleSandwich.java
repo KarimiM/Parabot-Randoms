@@ -29,7 +29,6 @@ public class TriangleSandwich implements Random {
 
     @Override
     public void execute() {
-        //Drop Triangle Sandwich
         if (this.item != null) {
             item.drop();
             Time.sleep(new SleepCondition() {

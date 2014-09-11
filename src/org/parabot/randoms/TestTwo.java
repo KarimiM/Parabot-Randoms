@@ -20,4 +20,9 @@ public class TestTwo implements Random {
     public String getName() {
         return "TestTwo";
     }
+
+    @Override
+    public String getServer() {
+        return "ikov";
+    }
 }

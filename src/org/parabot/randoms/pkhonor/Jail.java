@@ -85,4 +85,14 @@ public class Jail implements Random {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String getName() {
+        return "Jail solver";
+    }
+
+    @Override
+    public String getServer() {
+        return "pkhonor";
+    }
 }

@@ -12,17 +12,17 @@ import java.lang.Override;
  * Created with IntelliJ IDEA.
  * User: Piet Jetse
  * Date: 12-9-2014
- * Time: 16:13
+ * Time: 17:19
  */
-public class SandwichLady implements Random {
+public class MysteriousOldMan implements Random {
 
-    Npc lady;
+    Npc man;
 
     @Override
     public boolean activate() {
-        for (Npc npc : Npcs.getNearest(3117)) {
+        for (Npc npc : Npcs.getNearest(410)) {
             if (npc != null && npc.getInteractingCharacter().equals(Players.getMyPlayer())) {
-                lady = npc;
+                man = npc;
                 return true;
             }
         }
@@ -31,12 +31,12 @@ public class SandwichLady implements Random {
 
     @Override
     public void execute() {
-        if(lady != null && lady.getInteractingCharacter().equals(Players.getMyPlayer())){
-            lady.interact(0);
+        if(man != null && man.getInteractingCharacter().equals(Players.getMyPlayer())){
+            man.interact(0);
             Time.sleep(new SleepCondition() {
                 @Override
                 public boolean isValid() {
-                    return !lady.getInteractingCharacter().equals(Players.getMyPlayer());
+                    return !man.getInteractingCharacter().equals(Players.getMyPlayer());
                 }
             },1500);
         }
@@ -44,7 +44,7 @@ public class SandwichLady implements Random {
 
     @Override
     public String getName() {
-        return "Sandwich Lady Solver";
+        return "Mysterious Old Man Solver";
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.parabot.randoms.soulsplit;
 
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.framework.SleepCondition;
-import org.parabot.environment.scripts.framework.Strategy;
 import org.parabot.environment.scripts.randoms.Random;
 import org.soulsplit.api.methods.GroundItems;
 import org.soulsplit.api.methods.Inventory;
@@ -17,16 +16,19 @@ import org.soulsplit.api.wrappers.Item;
  * Time: 20:14
  */
 public class BrokenPickAxe implements Random {
+
+    private int[] HEADS = {480, 482, 484, 4876, 488, 490};
+
+
     @Override
     public boolean activate() {
         GroundItem head = getHead();
-        if(Inventory.getCount(467) > 0){
-            if(head != null){
-                System.out.println("Need To Take Head");
+        if (Inventory.getCount(467) > 0) {
+            if (head != null) {
                 return true;
             }
 
-            if(Inventory.getCount(491) > 0){
+            if (Inventory.getCount(head.getId() + 1) > 0) {
                 return true;
             }
         }
@@ -35,36 +37,36 @@ public class BrokenPickAxe implements Random {
 
     @Override
     public void execute() {
+
         try {
+            final GroundItem head = getHead();
 
-            GroundItem head = getHead();
-
-            if(head != null){
+            if (head != null) {
                 System.out.println("Taking Head");
                 head.take();
                 Time.sleep(new SleepCondition() {
                     @Override
                     public boolean isValid() {
-                        return Inventory.getCount(491) > 0;
+                        return Inventory.getCount(head.getId() + 1) > 0;
                     }
-                },2500);
+                }, 2500);
             }
 
-            if(Inventory.getCount(491) > 0 && Inventory.getCount(467) > 0){
-                Menu.sendAction(447,466,getItem(467).getSlot(),3214);
+            if (Inventory.getCount(head.getId() + 1) > 0 && Inventory.getCount(467) > 0) {
+                Menu.sendAction(447, 466, getItem(467).getSlot(), 3214);
                 Time.sleep(50);
-                Menu.sendAction(870,490,getItem(491).getSlot(),3214);
+                Menu.sendAction(870, head.getId(), getItem(head.getId() + 1).getSlot(), 3214);
                 Time.sleep(new SleepCondition() {
                     @Override
                     public boolean isValid() {
-                        return Inventory.getCount(491) == 0 ;
+                        return Inventory.getCount(491) == 0;
                     }
-                },2500);
+                }, 2500);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
+
     }
 
     private GroundItem getHead() {
@@ -78,9 +80,9 @@ public class BrokenPickAxe implements Random {
 
     }
 
-    private Item getItem(int id){
-        for(Item item : Inventory.getItems()){
-            if(item != null && item.getId() == id){
+    private Item getItem(int id) {
+        for (Item item : Inventory.getItems()) {
+            if (item != null && item.getId() == id) {
                 return item;
             }
         }

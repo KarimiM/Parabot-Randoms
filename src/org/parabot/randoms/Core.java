@@ -6,6 +6,7 @@ import org.parabot.randoms.pkhonor.Jail;
 import org.parabot.randoms.pkhonor.MysteriousOldMan;
 import org.parabot.randoms.pkhonor.SandwichLady;
 import org.parabot.randoms.pkhonor.TriangleSandwich;
+import org.parabot.randoms.soulsplit.BrokenPickAxe;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Core {
         randoms.add(new TriangleSandwich());
         randoms.add(new SandwichLady());
         randoms.add(new MysteriousOldMan());
+        randoms.add(new BrokenPickAxe());
 
         for (Random random : randoms){
             if (random.getServer().toLowerCase().equalsIgnoreCase(server.toLowerCase())){

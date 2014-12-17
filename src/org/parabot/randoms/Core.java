@@ -2,10 +2,7 @@ package org.parabot.randoms;
 
 import org.parabot.core.Context;
 import org.parabot.environment.scripts.randoms.Random;
-import org.parabot.randoms.pkhonor.Jail;
-import org.parabot.randoms.pkhonor.MysteriousOldMan;
-import org.parabot.randoms.pkhonor.SandwichLady;
-import org.parabot.randoms.pkhonor.TriangleSandwich;
+import org.parabot.randoms.pkhonor.*;
 import org.parabot.randoms.soulsplit.BrokenPickAxe;
 
 import java.util.ArrayList;
@@ -23,8 +20,10 @@ public class Core {
         randoms.add(new MysteriousOldMan());
         randoms.add(new BrokenPickAxe());
 
+        org.parabot.core.Core.verbose("Possible randoms:");
         for (Random random : randoms){
             if (random.getServer().toLowerCase().equalsIgnoreCase(server.toLowerCase())){
+                org.parabot.core.Core.verbose("-> " + random.getName());
                 Context.getInstance().getRandomHandler().addRandom(random);
             }
         }

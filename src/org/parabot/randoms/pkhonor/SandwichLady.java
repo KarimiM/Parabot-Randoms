@@ -6,13 +6,9 @@ import org.parabot.environment.scripts.randoms.Random;
 import org.rev317.min.api.methods.Npcs;
 import org.rev317.min.api.methods.Players;
 import org.rev317.min.api.wrappers.Npc;
-import java.lang.Override;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Piet Jetse
- * Date: 12-9-2014
- * Time: 16:13
+ * Created with IntelliJ IDEA. User: Piet Jetse Date: 12-9-2014 Time: 16:13
  */
 public class SandwichLady implements Random {
 
@@ -31,14 +27,14 @@ public class SandwichLady implements Random {
 
     @Override
     public void execute() {
-        if(lady != null && lady.getInteractingCharacter().equals(Players.getMyPlayer())){
+        if (lady != null && lady.getInteractingCharacter().equals(Players.getMyPlayer())) {
             lady.interact(0);
             Time.sleep(new SleepCondition() {
                 @Override
                 public boolean isValid() {
                     return !lady.getInteractingCharacter().equals(Players.getMyPlayer());
                 }
-            },1500);
+            }, 1500);
         }
     }
 

@@ -6,13 +6,9 @@ import org.parabot.environment.scripts.randoms.Random;
 import org.rev317.min.api.methods.Npcs;
 import org.rev317.min.api.methods.Players;
 import org.rev317.min.api.wrappers.Npc;
-import java.lang.Override;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Piet Jetse
- * Date: 12-9-2014
- * Time: 17:19
+ * Created with IntelliJ IDEA. User: Piet Jetse Date: 12-9-2014 Time: 17:19
  */
 public class MysteriousOldMan implements Random {
 
@@ -31,14 +27,14 @@ public class MysteriousOldMan implements Random {
 
     @Override
     public void execute() {
-        if(man != null && man.getInteractingCharacter().equals(Players.getMyPlayer())){
+        if (man != null && man.getInteractingCharacter().equals(Players.getMyPlayer())) {
             man.interact(0);
             Time.sleep(new SleepCondition() {
                 @Override
                 public boolean isValid() {
                     return !man.getInteractingCharacter().equals(Players.getMyPlayer());
                 }
-            },1500);
+            }, 1500);
         }
     }
 

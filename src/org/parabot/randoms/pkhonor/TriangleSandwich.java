@@ -7,10 +7,7 @@ import org.rev317.min.api.methods.Inventory;
 import org.rev317.min.api.wrappers.Item;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Piet Jetse
- * Date: 11-9-2014
- * Time: 22:29
+ * Created with IntelliJ IDEA. User: Piet Jetse Date: 11-9-2014 Time: 22:29
  */
 public class TriangleSandwich implements Random {
 
@@ -18,8 +15,8 @@ public class TriangleSandwich implements Random {
 
     @Override
     public boolean activate() {
-        for (Item i : Inventory.getItems(6963)){
-            if (i != null){
+        for (Item i : Inventory.getItems(6963)) {
+            if (i != null) {
                 this.item = i;
                 return true;
             }

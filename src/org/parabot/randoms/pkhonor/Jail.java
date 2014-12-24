@@ -11,10 +11,7 @@ import org.rev317.min.api.wrappers.Npc;
 import org.rev317.min.api.wrappers.SceneObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Piet Jetse
- * Date: 11-9-2014
- * Time: 22:22
+ * Created with IntelliJ IDEA. User: Piet Jetse Date: 11-9-2014 Time: 22:22
  */
 
 public class Jail implements Random {

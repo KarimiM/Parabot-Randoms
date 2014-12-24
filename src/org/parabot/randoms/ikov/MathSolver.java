@@ -1,3 +1,5 @@
+package org.parabot.randoms.ikov;
+
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.scripts.randoms.Random;
@@ -5,17 +7,14 @@ import org.rev317.min.Loader;
 import org.rev317.min.api.methods.Game;
 import org.rev317.min.api.methods.Menu;
 
-public class MathSolver implements Random
-{
+public class MathSolver implements Random {
     @Override
-    public boolean activate()
-    {
+    public boolean activate() {
         return Game.getOpenBackDialogId() == 368;
     }
 
     @Override
-    public void execute()
-    {
+    public void execute() {
         String[] splitText = Loader.getClient().getInterfaceCache()[372].getMessage().split("\\s+");
 
         int answer = Integer.parseInt(splitText[4]) + Integer.parseInt(splitText[6].replace("?", ""));
@@ -29,14 +28,12 @@ public class MathSolver implements Random
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Math solver";
     }
 
     @Override
-    public String getServer()
-    {
+    public String getServer() {
         return "Ikov";
     }
 }

@@ -10,10 +10,7 @@ import org.soulsplit.api.wrappers.GroundItem;
 import org.soulsplit.api.wrappers.Item;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Piet Jetse
- * Date: 15-10-2014
- * Time: 20:14
+ * Created with IntelliJ IDEA. User: Piet Jetse Date: 15-10-2014 Time: 20:14
  */
 public class BrokenPickAxe implements Random {
 

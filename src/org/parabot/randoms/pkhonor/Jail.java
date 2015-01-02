@@ -15,14 +15,15 @@ import org.rev317.min.api.wrappers.SceneObject;
  */
 
 public class Jail implements Random {
-
-    Npc[] jailer;
+    private Npc jailer;
+    private final int[] ROCKS = {2093, 2092};
+    private final int[] PICK_AXES = {1266, 1268, 1270, 1272, 1274, 1276, 14605, 14608};
 
     @Override
     public boolean activate() {
         try {
-            if (jailer.length > 0 && jailer[0] != null) {
-                jailer = Npcs.getNearest(201);
+            if (jailer() != null) {
+                this.jailer = jailer();
                 return true;
             }
             return false;
@@ -35,10 +36,10 @@ public class Jail implements Random {
     public void execute() {
         try {
 
-            SceneObject rock = SceneObjects.getClosest(2093, 2092);
+            SceneObject rock = rock();
 
             //Check if we got an Pickaxe
-            if (Inventory.getCount(1266, 1268, 1270, 1272, 1274, 1276, 14605, 14608) > 0) {
+            if (Inventory.getCount(PICK_AXES) > 0) {
 
                 //Check if we can min the ores
                 if (!Inventory.isFull()) {
@@ -56,7 +57,7 @@ public class Jail implements Random {
 
                     //Inventory is full depositting ores
                 } else {
-                    jailer[0].interact(0);
+                    jailer.interact(0);
 
                     Time.sleep(new SleepCondition() {
                         @Override
@@ -69,7 +70,7 @@ public class Jail implements Random {
 
                 //getting Pickaxe
             } else {
-                jailer[0].interact(0);
+                jailer.interact(0);
                 Time.sleep(new SleepCondition() {
                     @Override
                     public boolean isValid() {
@@ -81,6 +82,24 @@ public class Jail implements Random {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private Npc jailer(){
+        for(Npc jailer : Npcs.getNearest(201)){
+            if(jailer != null){
+                return jailer;
+            }
+        }
+        return null;
+    }
+
+    private SceneObject rock(){
+        for(SceneObject rock : SceneObjects.getNearest(ROCKS)){
+            if(rock != null){
+                return rock;
+            }
+        }
+        return null;
     }
 
     @Override

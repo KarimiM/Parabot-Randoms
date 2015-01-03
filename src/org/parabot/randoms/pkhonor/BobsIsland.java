@@ -2,6 +2,7 @@ package org.parabot.randoms.pkhonor;
 
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.framework.SleepCondition;
+import org.parabot.environment.scripts.randoms.Random;
 import org.rev317.min.api.methods.Players;
 import org.rev317.min.api.methods.SceneObjects;
 import org.rev317.min.api.wrappers.Area;

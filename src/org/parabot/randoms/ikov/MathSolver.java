@@ -15,14 +15,42 @@ public class MathSolver implements Random {
 
     @Override
     public void execute() {
-        String[] splitText = Loader.getClient().getInterfaceCache()[372].getMessage().split("\\s+");
+        String message = Loader.getClient().getInterfaceCache()[372].getMessage();
 
-        int answer = Integer.parseInt(splitText[4]) + Integer.parseInt(splitText[6].replace("?", ""));
+        if (message.contains("name")) {
+            Menu.sendAction(679, -1, -1, 373);
+            Time.sleep(1000);
 
-        Menu.sendAction(679, -1, -1, 373);
-        Time.sleep(1000);
+            Keyboard.getInstance().sendKeys("Ikov");
+        } else {
+            String[] splitText = message.split("\\s+");
 
-        Keyboard.getInstance().sendKeys(Integer.toString(answer));
+            int firstOperand = Integer.parseInt(splitText[4]);
+            int secondOperand = Integer.parseInt(splitText[6].replace("?", ""));
+            int answer = 0;
+
+            char operator = splitText[5].charAt(0);
+
+            switch(operator) {
+                case '+':
+                    answer = firstOperand + secondOperand;
+                    break;
+                case '-':
+                    answer = firstOperand - secondOperand;
+                    break;
+                case '*':
+                    answer = firstOperand * secondOperand;
+                    break;
+                case '/':
+                    answer = firstOperand / secondOperand;
+                    break;
+            }
+
+            Menu.sendAction(679, -1, -1, 373);
+            Time.sleep(1000);
+
+            Keyboard.getInstance().sendKeys(Integer.toString(answer));
+        }
 
         Time.sleep(1000);
     }

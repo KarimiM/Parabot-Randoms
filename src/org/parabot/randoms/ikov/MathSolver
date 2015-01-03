@@ -15,33 +15,46 @@ public class MathSolver implements Random {
 
     @Override
     public void execute() {
-        String[] splitText = Loader.getClient().getInterfaceCache()[372].getMessage().split("\\s+");
+        String message = Loader.getClient().getInterfaceCache()[372].getMessage();
 
-        int firstOperand = Integer.parseInt(splitText[4]);
-        int secondOperand = Integer.parseInt(splitText[6].replace("?", ""));
-        int answer = 0;
+        if (message.contains("name")) {
+            Menu.sendAction(679, -1, -1, 373);
+            Time.sleep(1000);
 
-        char operator = splitText[5].charAt(0);
+            Keyboard.getInstance().sendKeys("Ikov");
 
-        switch(operator) {
-            case '+':
-                answer = firstOperand + secondOperand;
-                break;
-            case '-':
-                answer = firstOperand - secondOperand;
-                break;
-            case '*':
-                answer = firstOperand * secondOperand;
-                break;
-            case '/':
-                answer = firstOperand / secondOperand;
-                break;
+            System.out.println("Attempting to solve Ikov random");
+        } else {
+            String[] splitText = message.split("\\s+");
+
+            int firstOperand = Integer.parseInt(splitText[4]);
+            int secondOperand = Integer.parseInt(splitText[6].replace("?", ""));
+            int answer = 0;
+
+            char operator = splitText[5].charAt(0);
+
+            switch(operator) {
+                case '+':
+                    answer = firstOperand + secondOperand;
+                    break;
+                case '-':
+                    answer = firstOperand - secondOperand;
+                    break;
+                case '*':
+                    answer = firstOperand * secondOperand;
+                    break;
+                case '/':
+                    answer = firstOperand / secondOperand;
+                    break;
+            }
+
+            Menu.sendAction(679, -1, -1, 373);
+            Time.sleep(1000);
+
+            Keyboard.getInstance().sendKeys(Integer.toString(answer));
+
+            System.out.println("Attempting to solve math random");
         }
-
-        Menu.sendAction(679, -1, -1, 373);
-        Time.sleep(1000);
-
-        Keyboard.getInstance().sendKeys(Integer.toString(answer));
 
         Time.sleep(1000);
     }

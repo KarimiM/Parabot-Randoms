@@ -23,13 +23,30 @@ public class MathSolver implements Random {
 
             Keyboard.getInstance().sendKeys("Ikov");
         } else {
+            ArrayList<Character> operators = new ArrayList<>();
+            operators.add('+');
+            operators.add('-');
+            operators.add('*');
+            operators.add('/');
+
             String[] splitText = message.split("\\s+");
 
-            int firstOperand = Integer.parseInt(splitText[4]);
-            int secondOperand = Integer.parseInt(splitText[6].replace("?", ""));
+            char operator = '+';
+
+            int firstOperand = 0;
+            int secondOperand = 0;
             int answer = 0;
 
-            char operator = splitText[5].charAt(0);
+            for (int i = 0; i < splitText.length; i++) {
+                if (operators.contains(splitText[i].charAt(0))) {
+                    operator = splitText[i].charAt(0);
+
+                    firstOperand = Integer.parseInt(splitText[i - 1]);
+                    secondOperand = Integer.parseInt(splitText[i + 1].replace("?", ""));
+
+                    break;
+                }
+            }
 
             switch(operator) {
                 case '+':

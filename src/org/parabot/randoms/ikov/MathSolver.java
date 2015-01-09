@@ -7,6 +7,8 @@ import org.rev317.min.Loader;
 import org.rev317.min.api.methods.Game;
 import org.rev317.min.api.methods.Menu;
 
+import java.util.ArrayList;
+
 public class MathSolver implements Random {
     @Override
     public boolean activate() {
@@ -17,11 +19,16 @@ public class MathSolver implements Random {
     public void execute() {
         String message = Loader.getClient().getInterfaceCache()[372].getMessage();
 
-        if (message.contains("name")) {
+        if (message.toLowerCase().contains("name")) {
             Menu.sendAction(679, -1, -1, 373);
             Time.sleep(1000);
 
             Keyboard.getInstance().sendKeys("Ikov");
+        } else if(message.toLowerCase().contains("owner")){
+            Menu.sendAction(679, -1, -1, 373);
+            Time.sleep(1000);
+
+            Keyboard.getInstance().sendKeys("David");
         } else {
             ArrayList<Character> operators = new ArrayList<>();
             operators.add('+');
@@ -48,7 +55,7 @@ public class MathSolver implements Random {
                 }
             }
 
-            switch(operator) {
+            switch (operator) {
                 case '+':
                     answer = firstOperand + secondOperand;
                     break;

@@ -2,7 +2,7 @@ package org.parabot.randoms;
 
 import org.parabot.core.Context;
 import org.parabot.environment.scripts.randoms.Random;
-import org.parabot.randoms.ikov.MathSolver;
+import org.parabot.randoms.ikov.QuestionSolver;
 import org.parabot.randoms.pkhonor.*;
 import org.parabot.randoms.soulsplit.BrokenPickAxe;
 
@@ -20,7 +20,7 @@ public class Core {
         randoms.add(new SandwichLady());
         randoms.add(new MysteriousOldMan());
         randoms.add(new BrokenPickAxe());
-        randoms.add(new MathSolver());
+        randoms.add(new QuestionSolver());
         randoms.add(new BobsIsland());
 
         org.parabot.core.Core.verbose("Possible randoms:");

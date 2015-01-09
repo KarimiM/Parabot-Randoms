@@ -9,7 +9,7 @@ import org.rev317.min.api.methods.Menu;
 
 import java.util.ArrayList;
 
-public class MathSolver implements Random {
+public class QuestionSolver implements Random {
     @Override
     public boolean activate() {
         return Game.getOpenBackDialogId() == 368;

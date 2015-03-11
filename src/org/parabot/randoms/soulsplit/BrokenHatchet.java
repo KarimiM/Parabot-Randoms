@@ -1,165 +1,118 @@
 package org.parabot.randoms.soulsplit;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-
-import org.parabot.environment.api.interfaces.Paintable;
 import org.parabot.environment.api.utils.Time;
+import org.parabot.environment.scripts.framework.SleepCondition;
 import org.parabot.environment.scripts.randoms.Random;
-import org.soulsplit.api.methods.Game;
 import org.soulsplit.api.methods.GroundItems;
 import org.soulsplit.api.methods.Inventory;
 import org.soulsplit.api.methods.Menu;
-import org.soulsplit.api.methods.Skill;
 import org.soulsplit.api.wrappers.GroundItem;
 import org.soulsplit.api.wrappers.Item;
 
-public class BrokenHatchet implements Random, Paintable {
+public class BrokenHatchet implements Random {
 	
-	static int[] INVENTORY_HEAD_IDS = {509, 511, 513, 515, 517, 519, 521, 6744};
-	static int[] GROUND_HEAD_IDS = {508, 510, 512, 514, 516, 518, 520, 6743};	
-	static int[] AXES = { 1352, 1350, 1356, 1358, 1360, 6740 };
-	static int[] LOGS = { 1512, 1522, 1520, 1518, 1514, 1516, 10809 };
+	private final int[] groundAxeHeads = {508, 510, 512, 514, 516, 518, 520, 6743};
 	
-	public static boolean headAvailable() {
-      GroundItem[] Head = GroundItems.getNearest(GROUND_HEAD_IDS);
-          if (Head.length > 0
-              && Head[0] != null
-              && Head[0].distanceTo() < 8) {
-          return true;
-      }
-      return false;
-  }
+	private final int[] inventoryAxeHeads = {509, 511, 513, 515, 517, 519, 521, 6744};
 	
-	public Item getHandle() {
-        for (Item handle : Inventory.getItems(467)) {
-            if (handle != null) {
-                return handle;
-            }
-        }
-        return null;
-    }
-
-    public Item getInventoryHead() {
-        for (Item head : Inventory.getItems(INVENTORY_HEAD_IDS)) {
-            if (head != null) {
-                return head;
-            }
-        }
-        return null;
-    }
-    
-    public Item getAxe() {
-        for (Item axe : Inventory.getItems(AXES)) {
-            if (axe != null) {
-                return axe;
-            }
-        }
-        return null;
-    }
-    
-    public Item getLogs() {
-        for (Item logs : Inventory.getItems(LOGS)) {
-            if (logs != null) {
-                return logs;
-            }
-        }
-        return null;
-    }
-    
-    private GroundItem getHead() {
-        for (GroundItem head : GroundItems.getNearest(GROUND_HEAD_IDS)) {
-            if (head != null) {
-                return head;
-            }
-        }
-        return null;
-    }
+	private final long[] axeHead = {509, 511, 513, 515, 517, 519, 521, 6744};
+	
+	private final int[] axesId = {1350, 1352, 1354, 1356, 1358, 1360, 1362, 6740};
+	
+	private final long[] axeId = {1350, 1352, 1354, 1356, 1358, 1360, 1362, 6740};
+	
+	private final int axeHandle = 493;
+	
+	
     
 	@Override
 	public boolean activate() {
-		return headAvailable() || getInventoryHead() != null && Game.isLoggedIn();
+		GroundItem[] toPickup = GroundItems.getNearest(groundAxeHeads);
+		return (toPickup.length > 0 && toPickup[0] != null && toPickup[0].distanceTo() < 7) || Inventory.getCount(axeHead) > 0;
 	}
 
 	@Override
 	public void execute() {
 
-		//Picks up head
-		if(getInventoryHead() == null
-				&& headAvailable()) {
-			if(getHead() != null && Inventory.getCount() <= 26) {
-				System.out.println("Picking up head");
-	            getHead().take();
-	            Time.sleep(800);
-			}
-			if(getHead() != null && Inventory.getCount() > 26  && getInventoryHead() == null) {
-				while(getLogs() != null && Inventory.getCount() > 26) {
-					getLogs().drop();
-					Time.sleep(1500);
+		// Picks up head
+		System.out.println("Completing Woodcutting Random...");
+
+		final GroundItem[] toPickup = GroundItems.getNearest(groundAxeHeads);
+
+		if (toPickup.length > 0 && !Inventory.isFull() && toPickup[0] != null) {
+			System.out.println("Picking up axe head");
+			Menu.sendAction(234, toPickup[0].getId(), toPickup[0].getX(), toPickup[0].getY());
+			Time.sleep(new SleepCondition() {
+				@Override
+				public boolean isValid() {
+					return toPickup[0] == null;
 				}
+			}, 1500);
+		}
+
+		// Unequips the handle
+		if (Inventory.getCount(axeHead) > 0) {
+
+			if (Inventory.getCount(axeHandle) < 1) {
+				Menu.sendAction(632, axeHandle - 1, 3, 1688);
+				Time.sleep(new SleepCondition() {
+					@Override
+					public boolean isValid() {
+						return Inventory.getCount(axeHandle) > 0;
+					}
+				}, 5000);
+			}
+
+			if (Inventory.getCount(axeHandle) > 0) {
+				combine(axeHandle, inventoryAxeHeads);
+				Time.sleep(new SleepCondition() {
+					@Override
+					public boolean isValid() {
+						return Inventory.getCount(Constants.AXE) > 0;
+					}
+				}, 5000);
 			}
 		}
-		
-		//Unequips the handle
-		if(getHandle() == null
-				&& getInventoryHead() != null
-				&& headAvailable() == false) {
-			if(Inventory.getCount() <= 27) {
-				//unequips handle
-				Menu.sendAction(632, 466, 3, 1688);
-				Time.sleep(2500);
-			}
-		}
-		
-		//Uses handle on head
-		if(getHandle() != null
-				&& getInventoryHead() != null 
-				&& headAvailable() == false) {
-				while(getHandle() != null && getInventoryHead() != null) {
-			        Menu.sendAction(447, (int) getHandle().getId() - 1, getHandle().getSlot(), 3214);
-			        Time.sleep(3500);
-			        Menu.sendAction(870, (int) getInventoryHead().getId() - 1, getInventoryHead().getSlot(), 3214);
-			        Time.sleep(3500);
-				}
-		}
-		
-		//Wielding Process
-		Item[] B_AXE = Inventory.getItems(1352);
-		Item[] I_AXE = Inventory.getItems(1350);
-		Item[] M_AXE = Inventory.getItems(1356);
-		Item[] A_AXE = Inventory.getItems(1358);
-		Item[] R_AXE = Inventory.getItems(1360);
-		Item[] D_AXE = Inventory.getItems(6740);
-		
-		if(getAxe() != null) {
-			if(Inventory.getCount(6740) > 0 && Skill.ATTACK.getLevel() >= 60) {
-				Menu.sendAction(454, (int) (D_AXE[0].getId() - 1), D_AXE[0].getSlot(), 3214);
-				Time.sleep(3000);
-			}
-			if(Inventory.getCount(1360) > 0 && Skill.ATTACK.getLevel() >= 40) {
-				Menu.sendAction(454, (int) (R_AXE[0].getId() - 1), R_AXE[0].getSlot(), 3214);
-				Time.sleep(3000);
-			}
-			if(Inventory.getCount(1358) > 0 && Skill.ATTACK.getLevel() >= 30) {
-				Menu.sendAction(454, (int) (A_AXE[0].getId() - 1), A_AXE[0].getSlot(), 3214);
-				Time.sleep(3000);
-			}
-			if(Inventory.getCount(1356) > 0 && Skill.ATTACK.getLevel() >= 20) {
-				Menu.sendAction(454, (int) (M_AXE[0].getId() - 1), M_AXE[0].getSlot(), 3214);
-				Time.sleep(3000);
-			}
-			if(Inventory.getCount(1352) > 0) {
-				Menu.sendAction(454, (int) (B_AXE[0].getId() - 1), B_AXE[0].getSlot(), 3214);
-				Time.sleep(3000);
-			}
-			if(Inventory.getCount(1350) > 0) {
-				Menu.sendAction(454, (int) (I_AXE[0].getId() - 1), I_AXE[0].getSlot(), 3214);
-				Time.sleep(3000);
+
+		// Equips axe
+		if (Inventory.getCount(axeId) > 0) {
+			
+			Item[] axe = Inventory.getItems(axesId);
+			
+			if (axe.length > 0 && axe[0] != null) {
+				
+				Menu.sendAction(454, (int) (axe[0].getId() - 1), axe[0].getSlot(), 3214);
+				
+				Time.sleep(new SleepCondition() {
+					@Override
+					public boolean isValid() {
+						return Inventory.getCount(axeId) < 1;
+					}
+				}, 3000);
 			}
 		}
 	}
-
+	
+	/**
+	 * Method written by Empathy.
+	 * @param idOne the first id to combine
+	 * @param idTwo the second id to combine
+	 */
+	public static void combine(int idOne, int...idTwo) {
+		for (Item i : Inventory.getItems(idOne)) {
+			for (Item j : Inventory.getItems(idTwo)) {
+				if (i != null) {
+					if (j != null) {
+						Menu.sendAction(447, (int) (i.getId() - 1), i.getSlot(), 3214);
+						Time.sleep(500);
+						Menu.sendAction(870, (int) (j.getId() - 1), j.getSlot(), 3214);
+						Time.sleep(500);
+					}
+				}
+			}
+		}
+	}
+	
 	@Override
 	public String getName() {
 		return "BrokenHatchet";
@@ -169,13 +122,4 @@ public class BrokenHatchet implements Random, Paintable {
 	public String getServer() {
 		return "Soulsplit";
 	}
-
-	@Override
-	public void paint(Graphics g) {
-		g.setColor(Color.RED);
-		g.setFont(new Font("Arial", Font.BOLD, 13));
-		g.drawString("Random Activated: BrokenHatchet - Created by Bears ", 10, 275);
-		
-	}
-
 }

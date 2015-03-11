@@ -98,7 +98,7 @@ public class BrokenHatchet implements Random {
 	 * @param idOne the first id to combine
 	 * @param idTwo the second id to combine
 	 */
-	public static void combine(int idOne, int...idTwo) {
+	private void combine(int idOne, int...idTwo) {
 		for (Item i : Inventory.getItems(idOne)) {
 			for (Item j : Inventory.getItems(idTwo)) {
 				if (i != null) {
